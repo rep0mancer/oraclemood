@@ -1,5 +1,7 @@
 import Quick
 import Nimble
+import OracleLightShared
+
 @testable import OracleLightApp
 
 final class SettingsTests: QuickSpec {
