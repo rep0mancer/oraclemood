@@ -7,6 +7,11 @@
 "mood.joyful" = "Joyful";
 "mood.ecstatic" = "Ecstatic";
 
+/* Palette names */
+"palette.vivid" = "Vivid";
+"palette.pastel" = "Pastel";
+"palette.dark" = "Dark";
+
 /* Notifications */
 "notification.praise.title" = "Great job!";
 "notification.praise.body" = "You've been feeling great lately. Keep it up!";
@@ -31,6 +36,7 @@
 "home.tab.daily" = "Daily";
 "home.tab.weekly" = "Weekly";
 "home.tab.monthly" = "Monthly";
+"home.title" = "OracleLight";
 
 /* Charts */
 "chart.yaxis.mood" = "Mood";

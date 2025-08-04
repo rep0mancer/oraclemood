@@ -14,6 +14,11 @@ internal enum L10n {
     internal static let moodJoyful = NSLocalizedString("mood.joyful", comment: "Joyful mood")
     internal static let moodEcstatic = NSLocalizedString("mood.ecstatic", comment: "Ecstatic mood")
 
+    // Palette names
+    internal static let paletteVivid = NSLocalizedString("palette.vivid", comment: "Vivid palette")
+    internal static let palettePastel = NSLocalizedString("palette.pastel", comment: "Pastel palette")
+    internal static let paletteDark = NSLocalizedString("palette.dark", comment: "Dark palette")
+
     // Notifications
     internal static let notificationPraiseTitle = NSLocalizedString("notification.praise.title", comment: "Praise rule title")
     internal static let notificationPraiseBody = NSLocalizedString("notification.praise.body", comment: "Praise rule body")
@@ -40,6 +45,7 @@ internal enum L10n {
     internal static let homeTabDaily = NSLocalizedString("home.tab.daily", comment: "Daily")
     internal static let homeTabWeekly = NSLocalizedString("home.tab.weekly", comment: "Weekly")
     internal static let homeTabMonthly = NSLocalizedString("home.tab.monthly", comment: "Monthly")
+    internal static let homeTitle = NSLocalizedString("home.title", comment: "Home title")
 
     // Charts
     internal static let chartYAxisMood = NSLocalizedString("chart.yaxis.mood", comment: "Mood axis")
