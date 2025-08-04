@@ -1,4 +1,5 @@
 import SwiftUI
+import OracleLightShared
 
 /// Root view that orchestrates the onboarding flow. It presents a sequence of
 /// screens for the privacy oath, prompt scheduling, and palette selection. Once
