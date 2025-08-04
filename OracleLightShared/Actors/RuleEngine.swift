@@ -22,12 +22,12 @@ actor RuleEngine {
 
     /// Checks if a notification can be scheduled based on a 24-hour rate limit.
     private func canScheduleNotification(now: Date, events: [RuleEvent]) -> Bool {
-        guard let lastEvent = events.last else {
+        guard let mostRecentEvent = events.max(by: { $0.triggeredAt < $1.triggeredAt }) else {
             // No previous events, so we can schedule.
             return true
         }
         // Rate limit across both praise and advisory events.
-        return now.timeIntervalSince(lastEvent.triggeredAt) >= 24 * 60 * 60
+        return now.timeIntervalSince(mostRecentEvent.triggeredAt) >= 24 * 60 * 60
     }
 
     /// Rule: ≥3 consecutive moods in (Happy|Ecstatic). If triggered, create
