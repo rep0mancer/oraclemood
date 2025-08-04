@@ -55,12 +55,15 @@ struct SettingsView: View {
             Section(header: Text(L10n.settingsPurchaseSection)) {
                 if purchaseController.isPurchased {
                     Text(L10n.settingsPurchaseThanks)
-                } else {
+                } else if let product = purchaseController.product {
                     Button(action: {
                         Task { await purchaseController.purchase(errorHandler: errorState) }
                     }) {
-                        Text(L10n.settingsPurchasePrice(purchaseController.product?.displayPrice ?? "€7.99"))
+                        Text(L10n.settingsPurchasePrice(product.displayPrice))
                     }
+                } else {
+                    // Product information is not yet available.
+                    ProgressView("Loading store information...")
                 }
             }
         }
