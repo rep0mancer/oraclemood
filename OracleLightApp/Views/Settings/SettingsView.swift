@@ -104,9 +104,13 @@ struct SettingsView: View {
 
     private func save() {
         Task {
-            try? await DatabaseService.shared.updateSettings(settings)
-            await PromptScheduler.shared.recompute()
-            dismiss()
+            do {
+                try await DatabaseService.shared.updateSettings(settings)
+                await PromptScheduler.shared.recompute()
+                dismiss()
+            } catch {
+                await errorState.present(error: error)
+            }
         }
     }
 
