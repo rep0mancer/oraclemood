@@ -1,5 +1,6 @@
 import Foundation
 import StoreKit
+import OracleLightShared
 
 /// Handles loading and purchasing the one‑time non‑consumable product used to
 /// unlock premium features. On initialisation it queries the App Store for
@@ -12,7 +13,7 @@ final class PurchaseController: ObservableObject {
 
     /// The identifier of the non‑consumable product. This must match the
     /// identifier configured in App Store Connect.
-    private let productID = "oraclelight.pro"
+    private let productID = AppConfig.proProductID
 
     init() {
         Task { await load() }
@@ -37,7 +38,7 @@ final class PurchaseController: ObservableObject {
     }
 
     /// Initiates a purchase of the product. Updates `isPurchased` on success.
-    func purchase() async {
+    func purchase(errorHandler: ErrorState) async {
         guard let product = self.product else { return }
         do {
             let result = try await product.purchase()
@@ -50,7 +51,7 @@ final class PurchaseController: ObservableObject {
                 break
             }
         } catch {
-            // ignore
+            await errorHandler.present(error: error)
         }
     }
 }

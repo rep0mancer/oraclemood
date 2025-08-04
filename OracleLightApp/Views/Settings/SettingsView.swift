@@ -1,5 +1,6 @@
 import SwiftUI
 import StoreKit
+import OracleLightShared
 
 /// Displays user settings including prompt times, minimum interval, colour palette,
 /// and purchase options. Includes an export database button and legal
@@ -9,6 +10,7 @@ struct SettingsView: View {
     @State private var isPresentingExporter = false
     @StateObject private var purchaseController = PurchaseController()
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var errorState: ErrorState
 
     var body: some View {
         Form {
@@ -55,7 +57,7 @@ struct SettingsView: View {
                     Text(L10n.settingsPurchaseThanks)
                 } else {
                     Button(action: {
-                        Task { await purchaseController.purchase() }
+                        Task { await purchaseController.purchase(errorHandler: errorState) }
                     }) {
                         Text(L10n.settingsPurchasePrice(purchaseController.product?.displayPrice ?? "€7.99"))
                     }
@@ -113,8 +115,8 @@ struct DBExportDocument: FileDocument {
     init() {
         // Read the database file from the shared App Group into memory. In a real
         // implementation you would compress and password‑protect the file.
-        let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.yourcompany.oraclelight")
-        let dbURL = container?.appendingPathComponent("oracledb.sqlite")
+        let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConfig.appGroupIdentifier)
+        let dbURL = container?.appendingPathComponent(AppConfig.databaseFilename)
         self.data = (try? Data(contentsOf: dbURL ?? URL(fileURLWithPath: "/dev/null"))) ?? Data()
     }
     init(configuration: ReadConfiguration) throws {

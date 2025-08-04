@@ -4,6 +4,7 @@ import Charts
 /// Top level home view containing daily, weekly and monthly tabs with charts.
 struct HomeView: View {
     @EnvironmentObject var moodStore: MoodStore
+    @EnvironmentObject var errorState: ErrorState
     @State private var selection: Tab = .daily
     @State private var ruleEvents: [RuleEvent] = []
 
@@ -38,6 +39,13 @@ struct HomeView: View {
                     Image(systemName: "gearshape")
                 }
             }
+        }
+        .alert(isPresented: $errorState.isPresentingError) {
+            Alert(
+                title: Text("An Error Occurred"),
+                message: Text(errorState.errorMessage),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 }

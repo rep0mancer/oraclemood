@@ -4,6 +4,7 @@ import UserNotifications
 @main
 struct OracleLightApp: App {
     @StateObject private var moodStore = MoodStore.shared
+    @StateObject private var errorState = ErrorState()
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
@@ -23,9 +24,11 @@ struct OracleLightApp: App {
             if hasSeenOnboarding {
                 HomeView()
                     .environmentObject(moodStore)
+                    .environmentObject(errorState)
             } else {
                 OnboardingFlowView(hasSeenOnboarding: $hasSeenOnboarding)
                     .environmentObject(moodStore)
+                    .environmentObject(errorState)
             }
         }
     }

@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import OracleLightShared
 
 /// Responsible for initialising and providing access to the encrypted GRDB
 /// database. All database writes should occur on a background actor to avoid
@@ -22,12 +23,14 @@ final class DatabaseService {
     /// live activities, intents) can access the same data. The App Group
     /// identifier must also be declared in the targets' entitlements.
     private func databaseURL() throws -> URL {
-        // Use an App Group named "group.com.yourcompany.oraclelight". The
+        // Use an App Group named `AppConfig.appGroupIdentifier`. The
         // string must match the identifier configured in your Xcode project.
-        guard let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.yourcompany.oraclelight") else {
+        guard let containerURL = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: AppConfig.appGroupIdentifier
+        ) else {
             throw NSError(domain: "DatabaseService", code: 1, userInfo: [NSLocalizedDescriptionKey: "App Group container not found"])
         }
-        return containerURL.appendingPathComponent("oracledb.sqlite")
+        return containerURL.appendingPathComponent(AppConfig.databaseFilename)
     }
 
     /// Initializes and migrates the encrypted database. Should be invoked once
