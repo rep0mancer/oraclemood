@@ -10,6 +10,7 @@ struct SettingsView: View {
     @State private var isPresentingExporter = false
     @StateObject private var purchaseController = PurchaseController()
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var errorState: ErrorState
 
     var body: some View {
         Form {
@@ -56,7 +57,7 @@ struct SettingsView: View {
                     Text(L10n.settingsPurchaseThanks)
                 } else {
                     Button(action: {
-                        Task { await purchaseController.purchase() }
+                        Task { await purchaseController.purchase(errorHandler: errorState) }
                     }) {
                         Text(L10n.settingsPurchasePrice(purchaseController.product?.displayPrice ?? "€7.99"))
                     }

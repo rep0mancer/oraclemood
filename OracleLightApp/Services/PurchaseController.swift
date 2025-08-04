@@ -38,7 +38,7 @@ final class PurchaseController: ObservableObject {
     }
 
     /// Initiates a purchase of the product. Updates `isPurchased` on success.
-    func purchase() async {
+    func purchase(errorHandler: ErrorState) async {
         guard let product = self.product else { return }
         do {
             let result = try await product.purchase()
@@ -51,7 +51,7 @@ final class PurchaseController: ObservableObject {
                 break
             }
         } catch {
-            // ignore
+            await errorHandler.present(error: error)
         }
     }
 }
