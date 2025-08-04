@@ -1,7 +1,7 @@
 import SwiftUI
 
 @MainActor
-class ErrorState: ObservableObject {
+final class ErrorState: ObservableObject {
     @Published var isPresentingError = false
     @Published var errorMessage = ""
 
