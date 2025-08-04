@@ -1,0 +1,5 @@
+// This Xcode project file is a placeholder required by the build specification.
+// The OracleLight project primarily uses Swift Package Manager. To create a
+// fully functional Xcode project, run `swift package generate-xcodeproj`
+// in the root of the repository.  This will produce an Xcode project
+// configured for the app target defined in Package.swift.

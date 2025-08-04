@@ -1,0 +1,60 @@
+/* Mood names */
+"mood.angry" = "Angry";
+"mood.sad" = "Sad";
+"mood.neutral" = "Neutral";
+"mood.content" = "Content";
+"mood.happy" = "Happy";
+"mood.joyful" = "Joyful";
+"mood.ecstatic" = "Ecstatic";
+
+/* Notifications */
+"notification.praise.title" = "Great job!";
+"notification.praise.body" = "You've been feeling great lately. Keep it up!";
+"notification.advisory.title" = "Check in with yourself";
+"notification.advisory.body" = "We’ve noticed several low moods. Take a moment to reflect.";
+"notification.prompt.title" = "How are you feeling?";
+"notification.prompt.body" = "Take a moment to log your mood.";
+
+/* Onboarding */
+"onboarding.privacy.title" = "Your Privacy Matters";
+"onboarding.privacy.body" = "OracleLight stores all of your data securely on your device. Nothing leaves your phone.";
+"onboarding.prompts.title" = "Schedule Prompts";
+"onboarding.prompts.interval" = "Minimum interval: %d min";
+"onboarding.palette.title" = "Choose a Colour Palette";
+"onboarding.finish" = "Finish";
+
+/* General buttons */
+"general.continue" = "Continue";
+"general.done" = "Done";
+
+/* Home tabs */
+"home.tab.daily" = "Daily";
+"home.tab.weekly" = "Weekly";
+"home.tab.monthly" = "Monthly";
+
+/* Charts */
+"chart.yaxis.mood" = "Mood";
+"chart.xaxis.time" = "Time";
+"chart.xaxis.dayofweek" = "Day";
+"chart.xaxis.day" = "Day";
+"chart.yaxis.hour" = "Hour";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.prompts.section" = "Prompt Times";
+"settings.prompts.add" = "Add Time";
+"settings.prompts.interval" = "Min Interval: %d min";
+"settings.palette.section" = "Colour Palette";
+"settings.palette.label" = "Palette";
+"settings.export.section" = "Data";
+"settings.export.button" = "Export Database";
+"settings.legal.section" = "About";
+"settings.licenses" = "Open Source Licences";
+"settings.legal" = "Legal";
+"settings.purchase.section" = "Unlock Full App";
+"settings.purchase.price" = "Purchase for %@";
+"settings.purchase.thanks" = "Thank you for purchasing!";
+
+/* Legal & licences */
+"legal.content" = "This is the legal notice. Your privacy is respected.";
+"licenses.content" = "Third‑party licences will appear here.";

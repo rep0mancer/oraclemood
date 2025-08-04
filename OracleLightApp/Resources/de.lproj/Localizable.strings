@@ -1,0 +1,60 @@
+/* Stimmungnamen */
+"mood.angry" = "Wütend";
+"mood.sad" = "Traurig";
+"mood.neutral" = "Neutral";
+"mood.content" = "Zufrieden";
+"mood.happy" = "Glücklich";
+"mood.joyful" = "Freudig";
+"mood.ecstatic" = "Ekstatisch";
+
+/* Benachrichtigungen */
+"notification.praise.title" = "Großartige Arbeit!";
+"notification.praise.body" = "Du fühlst dich in letzter Zeit großartig. Mach weiter so!";
+"notification.advisory.title" = "Achte auf dich";
+"notification.advisory.body" = "Wir haben mehrere niedrige Stimmungen bemerkt. Nimm dir einen Moment zum Reflektieren.";
+"notification.prompt.title" = "Wie fühlst du dich?";
+"notification.prompt.body" = "Nimm dir einen Moment, um deine Stimmung festzuhalten.";
+
+/* Onboarding */
+"onboarding.privacy.title" = "Deine Privatsphäre zählt";
+"onboarding.privacy.body" = "OracleLight speichert alle deine Daten sicher auf deinem Gerät. Nichts verlässt dein Telefon.";
+"onboarding.prompts.title" = "Benachrichtigungen planen";
+"onboarding.prompts.interval" = "Mindestabstand: %d Min.";
+"onboarding.palette.title" = "Wähle eine Farbpalette";
+"onboarding.finish" = "Fertig";
+
+/* Allgemeine Buttons */
+"general.continue" = "Weiter";
+"general.done" = "Fertig";
+
+/* Start Tabs */
+"home.tab.daily" = "Täglich";
+"home.tab.weekly" = "Wöchentlich";
+"home.tab.monthly" = "Monatlich";
+
+/* Diagramme */
+"chart.yaxis.mood" = "Stimmung";
+"chart.xaxis.time" = "Zeit";
+"chart.xaxis.dayofweek" = "Tag";
+"chart.xaxis.day" = "Tag";
+"chart.yaxis.hour" = "Stunde";
+
+/* Einstellungen */
+"settings.title" = "Einstellungen";
+"settings.prompts.section" = "Erinnerungszeiten";
+"settings.prompts.add" = "Zeit hinzufügen";
+"settings.prompts.interval" = "Mindestintervall: %d Min.";
+"settings.palette.section" = "Farbpalette";
+"settings.palette.label" = "Palette";
+"settings.export.section" = "Daten";
+"settings.export.button" = "Datenbank exportieren";
+"settings.legal.section" = "Info";
+"settings.licenses" = "Open‑Source‑Lizenzen";
+"settings.legal" = "Rechtliches";
+"settings.purchase.section" = "Vollversion freischalten";
+"settings.purchase.price" = "Kaufen für %@";
+"settings.purchase.thanks" = "Vielen Dank für deinen Kauf!";
+
+/* Rechtliches & Lizenzen */
+"legal.content" = "Dies ist der Rechtshinweis. Deine Privatsphäre wird respektiert.";
+"licenses.content" = "Die Lizenzen von Drittanbietern erscheinen hier.";

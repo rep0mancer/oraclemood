@@ -1,0 +1,35 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and upload a beta build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "OracleLight.xcodeproj")
+    build_app(
+      scheme: "OracleLightApp",
+      export_method: "app-store",
+      export_options: {
+        provisioningProfiles: {
+          "com.yourcompany.oraclelight" => "match AppStore com.yourcompany.oraclelight"
+        }
+      }
+    )
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      beta_app_review_info: {
+        contact_email: "support@yourcompany.com",
+        contact_first_name: "Oracle",
+        contact_last_name: "Light",
+        contact_phone: "+1 555 123 4567",
+        demo_account_name: "",
+        demo_account_password: "",
+        notes: "Automated TestFlight build"
+      }
+    )
+  end
+
+  desc "Build and upload a release build to TestFlight (external)"
+  lane :release do
+    capture_screenshots
+    beta
+  end
+end

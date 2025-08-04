@@ -1,0 +1,9 @@
+strings:
+  inputs:
+    - OracleLightApp/Resources/en.lproj
+    - OracleLightApp/Resources/de.lproj
+  outputs:
+    - templateName: structured-swift5
+      output: OracleLightApp/Generated/Strings.swift
+      params:
+        enumName: L10n
