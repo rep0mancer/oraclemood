@@ -9,6 +9,7 @@ struct OnboardingFlowView: View {
     @Binding var hasSeenOnboarding: Bool
     @State private var step: Step = .privacy
     @State private var settings: Settings = Settings.default
+    @EnvironmentObject var errorState: ErrorState
 
     enum Step {
         case privacy
@@ -33,9 +34,12 @@ struct OnboardingFlowView: View {
         }
         .onAppear {
             Task {
-                // Load existing settings from the database to prefill prompt times
-                let loaded = try? await DatabaseService.shared.fetchSettings()
-                settings = loaded ?? Settings.default
+                do {
+                    // Load existing settings from the database to prefill prompt times
+                    settings = try await DatabaseService.shared.fetchSettings()
+                } catch {
+                    await errorState.present(error: error)
+                }
             }
         }
     }

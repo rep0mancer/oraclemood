@@ -72,8 +72,12 @@ struct SettingsView: View {
         }
         .onAppear {
             Task {
-                settings = (try? await DatabaseService.shared.fetchSettings()) ?? Settings.default
-                // The purchase controller loads its state automatically on init
+                do {
+                    settings = try await DatabaseService.shared.fetchSettings()
+                    // The purchase controller loads its state automatically on init
+                } catch {
+                    await errorState.present(error: error)
+                }
             }
         }
         .fileExporter(isPresented: $isPresentingExporter, document: DBExportDocument()) { _ in }
