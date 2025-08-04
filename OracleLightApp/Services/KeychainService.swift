@@ -1,5 +1,6 @@
 import Foundation
 import Security
+import OracleLightShared
 
 /// Provides a thin wrapper around the iOS Keychain for storing and retrieving
 /// the database encryption key. Keys are stored with
@@ -9,15 +10,15 @@ final class KeychainService {
     static let shared = KeychainService()
     private init() {}
 
-    private let service = "com.yourcompany.oraclelight.dbkey"
-    private let account = "oraclelight_encryption_key"
+    private let service = AppConfig.keychainService
+    private let account = AppConfig.keychainAccount
 
     /// Keychain access group. When both the app and its extensions specify the
     /// same keychain access group entitlement, items stored under this group
     /// become available to all targets. This allows the live activity
     /// extension to retrieve the same SQLCipher key as the main app. Ensure
     /// that this string matches the value configured in your entitlements.
-    private let accessGroup = "group.com.yourcompany.oraclelight"
+    private let accessGroup = AppConfig.keychainAccessGroup
 
     /// Retrieves an existing 256‑bit key from the keychain or generates and
     /// persists a new key if none exists. The returned key is used to

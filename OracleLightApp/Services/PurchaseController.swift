@@ -1,5 +1,6 @@
 import Foundation
 import StoreKit
+import OracleLightShared
 
 /// Handles loading and purchasing the one‑time non‑consumable product used to
 /// unlock premium features. On initialisation it queries the App Store for
@@ -12,7 +13,7 @@ final class PurchaseController: ObservableObject {
 
     /// The identifier of the non‑consumable product. This must match the
     /// identifier configured in App Store Connect.
-    private let productID = "oraclelight.pro"
+    private let productID = AppConfig.proProductID
 
     init() {
         Task { await load() }
