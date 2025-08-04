@@ -17,6 +17,7 @@ struct OracleLightApp: App {
                 // This is a fatal error on startup. We must inform the user.
                 // In a real-world scenario, you might log this more formally.
                 await errorState.present(message: "A critical error occurred while initializing the database. Please restart the app. Error: \(error.localizedDescription)")
+                return
             }
             // Request notification authorization early so prompts can be scheduled
             await requestNotificationAuthorization()
