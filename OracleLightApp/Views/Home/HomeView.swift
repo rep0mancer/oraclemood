@@ -1,5 +1,6 @@
 import SwiftUI
 import Charts
+import OracleLightShared
 
 /// Top level home view containing daily, weekly and monthly tabs with charts.
 struct HomeView: View {
