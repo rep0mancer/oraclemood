@@ -63,8 +63,7 @@ struct SettingsView: View {
                     }
                 } else {
                     // Product information is not yet available.
-                    Text("Loading store information...")
-                        .foregroundColor(.secondary)
+                    ProgressView("Loading store information...")
                 }
             }
         }
