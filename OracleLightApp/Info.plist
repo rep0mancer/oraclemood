@@ -7,7 +7,7 @@
     <key>CFBundleName</key>
     <string>OracleLight</string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.oraclelight</string>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>

@@ -1,5 +1,6 @@
 import SwiftUI
 import StoreKit
+import OracleLightShared
 
 /// Displays user settings including prompt times, minimum interval, colour palette,
 /// and purchase options. Includes an export database button and legal
@@ -113,8 +114,8 @@ struct DBExportDocument: FileDocument {
     init() {
         // Read the database file from the shared App Group into memory. In a real
         // implementation you would compress and password‑protect the file.
-        let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.yourcompany.oraclelight")
-        let dbURL = container?.appendingPathComponent("oracledb.sqlite")
+        let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConfig.appGroupIdentifier)
+        let dbURL = container?.appendingPathComponent(AppConfig.databaseFilename)
         self.data = (try? Data(contentsOf: dbURL ?? URL(fileURLWithPath: "/dev/null"))) ?? Data()
     }
     init(configuration: ReadConfiguration) throws {

@@ -10,9 +10,9 @@ final class KeychainService {
     static let shared = KeychainService()
     private init() {}
 
-    private let service = "com.yourcompany.oraclelight.dbkey"
-    private let account = "oraclelight_encryption_key"
-    private let accessGroup = "group.com.yourcompany.oraclelight"
+    private let service = AppConfig.keychainService
+    private let account = AppConfig.keychainAccount
+    private let accessGroup = AppConfig.keychainAccessGroup
 
     /// Retrieves an existing 256‑bit key from the keychain or generates and
     /// persists a new key if none exists. The returned key is used to

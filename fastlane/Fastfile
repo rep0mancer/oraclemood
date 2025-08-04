@@ -1,5 +1,10 @@
 default_platform(:ios)
 
+app_config_path = File.expand_path("../OracleLightShared/Configuration/AppConfig.swift", __dir__)
+app_config = File.read(app_config_path)
+bundle_identifier = app_config[/bundleIdentifier\s*=\s*"([^"]+)"/, 1]
+contact_email = app_config[/contactEmail\s*=\s*"([^"]+)"/, 1]
+
 platform :ios do
   desc "Build and upload a beta build to TestFlight"
   lane :beta do
@@ -9,14 +14,14 @@ platform :ios do
       export_method: "app-store",
       export_options: {
         provisioningProfiles: {
-          "com.yourcompany.oraclelight" => "match AppStore com.yourcompany.oraclelight"
+          bundle_identifier => "match AppStore #{bundle_identifier}"
         }
       }
     )
     upload_to_testflight(
       skip_waiting_for_build_processing: true,
       beta_app_review_info: {
-        contact_email: "support@yourcompany.com",
+        contact_email: contact_email,
         contact_first_name: "Oracle",
         contact_last_name: "Light",
         contact_phone: "+1 555 123 4567",
