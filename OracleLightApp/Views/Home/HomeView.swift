@@ -18,13 +18,13 @@ struct HomeView: View {
         NavigationStack {
             TabView(selection: $selection) {
                 DailyChartView(entries: moodStore.entries)
-                    .tabItem { Label(NSLocalizedString("home.tab.daily", comment: "Daily"), systemImage: "chart.bar.fill") }
+                    .tabItem { Label(L10n.homeTabDaily, systemImage: "chart.bar.fill") }
                     .tag(Tab.daily)
                 WeeklyChartView(entries: moodStore.entries)
-                    .tabItem { Label(NSLocalizedString("home.tab.weekly", comment: "Weekly"), systemImage: "calendar") }
+                    .tabItem { Label(L10n.homeTabWeekly, systemImage: "calendar") }
                     .tag(Tab.weekly)
                 MonthlyChartView(entries: moodStore.entries)
-                    .tabItem { Label(NSLocalizedString("home.tab.monthly", comment: "Monthly"), systemImage: "calendar.circle") }
+                    .tabItem { Label(L10n.homeTabMonthly, systemImage: "calendar.circle") }
                     .tag(Tab.monthly)
             }
             .onAppear {
@@ -32,7 +32,7 @@ struct HomeView: View {
                     self.ruleEvents = (try? await DatabaseService.shared.fetchRuleEvents()) ?? []
                 }
             }
-            .navigationTitle("OracleLight")
+            .navigationTitle(L10n.homeTitle)
             .toolbar {
                 NavigationLink(destination: SettingsView()) {
                     Image(systemName: "gearshape")
@@ -51,14 +51,14 @@ struct DailyChartView: View {
         Chart {
             ForEach(todayEntries) { entry in
                 BarMark(
-                    x: .value("Time", entry.timestamp, unit: .hour),
-                    y: .value("Mood", entry.mood.rawValue)
+                    x: .value(L10n.chartXAxisTime, entry.timestamp, unit: .hour),
+                    y: .value(L10n.chartYAxisMood, entry.mood.rawValue)
                 )
-                .foregroundStyle(by: .value("Mood", entry.mood.localizedDescription))
+                .foregroundStyle(by: .value(L10n.chartYAxisMood, entry.mood.localizedDescription))
             }
         }
-        .chartYAxisLabel(NSLocalizedString("chart.yaxis.mood", comment: "Mood axis"))
-        .chartXAxisLabel(NSLocalizedString("chart.xaxis.time", comment: "Time axis"))
+        .chartYAxisLabel(L10n.chartYAxisMood)
+        .chartXAxisLabel(L10n.chartXAxisTime)
     }
 }
 
@@ -79,14 +79,14 @@ struct WeeklyChartView: View {
         Chart {
             ForEach(points, id: \ .0) { point in
                 RectangleMark(
-                    x: .value("Day", point.0),
-                    y: .value("Hour", point.1),
-                    color: .value("Mood", point.2)
+                    x: .value(L10n.chartXAxisDayOfWeek, point.0),
+                    y: .value(L10n.chartYAxisHour, point.1),
+                    color: .value(L10n.chartYAxisMood, point.2)
                 )
             }
         }
-        .chartXAxisLabel(NSLocalizedString("chart.xaxis.dayofweek", comment: "Day of week axis"))
-        .chartYAxisLabel(NSLocalizedString("chart.yaxis.hour", comment: "Hour axis"))
+        .chartXAxisLabel(L10n.chartXAxisDayOfWeek)
+        .chartYAxisLabel(L10n.chartYAxisHour)
     }
 }
 
@@ -106,13 +106,13 @@ struct MonthlyChartView: View {
         Chart {
             ForEach(points, id: \ .0) { point in
                 RectangleMark(
-                    x: .value("Day", point.0),
-                    y: .value("Hour", point.1),
-                    color: .value("Mood", point.2)
+                    x: .value(L10n.chartXAxisDay, point.0),
+                    y: .value(L10n.chartYAxisHour, point.1),
+                    color: .value(L10n.chartYAxisMood, point.2)
                 )
             }
         }
-        .chartXAxisLabel(NSLocalizedString("chart.xaxis.day", comment: "Day axis"))
-        .chartYAxisLabel(NSLocalizedString("chart.yaxis.hour", comment: "Hour axis"))
+        .chartXAxisLabel(L10n.chartXAxisDay)
+        .chartYAxisLabel(L10n.chartYAxisHour)
     }
 }

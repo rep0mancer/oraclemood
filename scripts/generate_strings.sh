@@ -11,3 +11,4 @@ set -euo pipefail
 project_root=$(dirname "$0")/..
 
 swiftgen config run --config "$project_root/swiftgen.yml"
+

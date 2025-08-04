@@ -12,7 +12,7 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section(header: Text(NSLocalizedString("settings.prompts.section", comment: "Prompt settings section"))) {
+            Section(header: Text(L10n.settingsPromptsSection)) {
                 ForEach(settings.promptTimes, id: \ .self) { time in
                     Text(time)
                 }
@@ -20,52 +20,52 @@ struct SettingsView: View {
                     settings.promptTimes.remove(atOffsets: offsets)
                 }
                 Button(action: addTime) {
-                    Label(NSLocalizedString("settings.prompts.add", comment: "Add prompt time"), systemImage: "plus")
+                    Label(L10n.settingsPromptsAdd, systemImage: "plus")
                 }
                 Stepper(value: $settings.minimumIntervalMinutes, in: 30...120, step: 15) {
-                    Text(String(format: NSLocalizedString("settings.prompts.interval", comment: "Minimum interval label"), settings.minimumIntervalMinutes))
+                    Text(L10n.settingsPromptsInterval(settings.minimumIntervalMinutes))
                 }
             }
-            Section(header: Text(NSLocalizedString("settings.palette.section", comment: "Palette section"))) {
-                Picker(NSLocalizedString("settings.palette.label", comment: "Palette picker label"), selection: $settings.palette) {
+            Section(header: Text(L10n.settingsPaletteSection)) {
+                Picker(L10n.settingsPaletteLabel, selection: $settings.palette) {
                     ForEach(Palette.allCases) { palette in
-                        Text(palette.rawValue.capitalized).tag(palette)
+                        Text(palette.localizedName).tag(palette)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-            Section(header: Text(NSLocalizedString("settings.export.section", comment: "Export section"))) {
+            Section(header: Text(L10n.settingsExportSection)) {
                 Button(action: { isPresentingExporter = true }) {
-                    Label(NSLocalizedString("settings.export.button", comment: "Export DB"), systemImage: "square.and.arrow.up")
+                    Label(L10n.settingsExportButton, systemImage: "square.and.arrow.up")
                 }
                 // Lock export behind the purchase. Users without the pro
                 // entitlement will see the button disabled.
                 .disabled(!purchaseController.isPurchased)
             }
-            Section(header: Text(NSLocalizedString("settings.legal.section", comment: "Legal section"))) {
+            Section(header: Text(L10n.settingsLegalSection)) {
                 NavigationLink(destination: LicensesView()) {
-                    Text(NSLocalizedString("settings.licenses", comment: "Licences"))
+                    Text(L10n.settingsLicenses)
                 }
                 NavigationLink(destination: LegalView()) {
-                    Text(NSLocalizedString("settings.legal", comment: "Legal"))
+                    Text(L10n.settingsLegal)
                 }
             }
-            Section(header: Text(NSLocalizedString("settings.purchase.section", comment: "Purchase section"))) {
+            Section(header: Text(L10n.settingsPurchaseSection)) {
                 if purchaseController.isPurchased {
-                    Text(NSLocalizedString("settings.purchase.thanks", comment: "Thank you text"))
+                    Text(L10n.settingsPurchaseThanks)
                 } else {
                     Button(action: {
                         Task { await purchaseController.purchase() }
                     }) {
-                        Text(String(format: NSLocalizedString("settings.purchase.price", comment: "Purchase price"), purchaseController.product?.displayPrice ?? "€7.99"))
+                        Text(L10n.settingsPurchasePrice(purchaseController.product?.displayPrice ?? "€7.99"))
                     }
                 }
             }
         }
-        .navigationTitle(NSLocalizedString("settings.title", comment: "Settings title"))
+        .navigationTitle(L10n.settingsTitle)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(NSLocalizedString("general.done", comment: "Done button"), action: save)
+                Button(L10n.generalDone, action: save)
             }
         }
         .onAppear {
@@ -129,10 +129,10 @@ struct DBExportDocument: FileDocument {
 struct LegalView: View {
     var body: some View {
         ScrollView {
-            Text(NSLocalizedString("legal.content", comment: "Legal content"))
+            Text(L10n.legalContent)
                 .padding()
         }
-        .navigationTitle(NSLocalizedString("settings.legal", comment: "Legal"))
+        .navigationTitle(L10n.settingsLegal)
     }
 }
 
@@ -141,8 +141,8 @@ struct LegalView: View {
 struct LicensesView: View {
     var body: some View {
         List {
-            Text(NSLocalizedString("licenses.content", comment: "Licences content"))
+            Text(L10n.licensesContent)
         }
-        .navigationTitle(NSLocalizedString("settings.licenses", comment: "Licences"))
+        .navigationTitle(L10n.settingsLicenses)
     }
 }

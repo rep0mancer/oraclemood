@@ -55,15 +55,15 @@ struct PrivacyOathView: View {
     let onContinue: () -> Void
     var body: some View {
         VStack(spacing: 20) {
-            Text(NSLocalizedString("onboarding.privacy.title", comment: "Privacy oath title"))
+            Text(L10n.onboardingPrivacyTitle)
                 .font(.largeTitle)
                 .bold()
                 .multilineTextAlignment(.center)
-            Text(NSLocalizedString("onboarding.privacy.body", comment: "Privacy oath body"))
+            Text(L10n.onboardingPrivacyBody)
                 .multilineTextAlignment(.leading)
             Spacer()
             Button(action: onContinue) {
-                Text(NSLocalizedString("general.continue", comment: "Continue button"))
+                Text(L10n.generalContinue)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.accentColor)
@@ -83,7 +83,7 @@ struct PromptSchedulerEditView: View {
 
     var body: some View {
         VStack {
-            Text(NSLocalizedString("onboarding.prompts.title", comment: "Prompt schedule title"))
+            Text(L10n.onboardingPromptsTitle)
                 .font(.title2)
                 .padding(.top)
             List {
@@ -110,11 +110,11 @@ struct PromptSchedulerEditView: View {
             }
             .listStyle(.plain)
             Stepper(value: $settings.minimumIntervalMinutes, in: 30...120, step: 15) {
-                Text(String(format: NSLocalizedString("onboarding.prompts.interval", comment: "Minimum interval"), settings.minimumIntervalMinutes))
+                Text(L10n.onboardingPromptsInterval(settings.minimumIntervalMinutes))
             }
             .padding()
             Button(action: onContinue) {
-                Text(NSLocalizedString("general.continue", comment: "Continue button"))
+                Text(L10n.generalContinue)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.accentColor)
@@ -146,26 +146,26 @@ struct PaletteSelectionView: View {
     let onFinish: () -> Void
     var body: some View {
         VStack {
-            Text(NSLocalizedString("onboarding.palette.title", comment: "Palette selection title"))
+            Text(L10n.onboardingPaletteTitle)
                 .font(.title2)
                 .padding()
             HStack(spacing: 20) {
                 ForEach(Palette.allCases) { palette in
                     Button(action: { selected = palette }) {
-                        Text(palette.rawValue.capitalized)
+                        Text(palette.localizedName)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(selected == palette ? Color.accentColor : Color.secondary.opacity(0.2))
                             .foregroundColor(selected == palette ? .white : .primary)
                             .cornerRadius(8)
                     }
-                    .accessibilityLabel(Text(palette.rawValue.capitalized))
+                    .accessibilityLabel(Text(palette.localizedName))
                 }
             }
             .padding()
             Spacer()
             Button(action: onFinish) {
-                Text(NSLocalizedString("onboarding.finish", comment: "Finish button"))
+                Text(L10n.onboardingFinish)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.accentColor)
@@ -173,6 +173,16 @@ struct PaletteSelectionView: View {
                     .cornerRadius(8)
             }
             .padding()
+        }
+    }
+}
+
+extension Palette {
+    var localizedName: String {
+        switch self {
+        case .vivid: return L10n.paletteVivid
+        case .pastel: return L10n.palettePastel
+        case .dark: return L10n.paletteDark
         }
     }
 }
