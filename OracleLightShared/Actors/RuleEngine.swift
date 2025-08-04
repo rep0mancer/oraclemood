@@ -20,6 +20,16 @@ actor RuleEngine {
         }
     }
 
+    /// Checks if a notification can be scheduled based on a 24-hour rate limit.
+    private func canScheduleNotification(now: Date, events: [RuleEvent]) -> Bool {
+        guard let lastEvent = events.last else {
+            // No previous events, so we can schedule.
+            return true
+        }
+        // Rate limit across both praise and advisory events.
+        return now.timeIntervalSince(lastEvent.triggeredAt) >= 24 * 60 * 60
+    }
+
     /// Rule: ≥3 consecutive moods in (Happy|Ecstatic). If triggered, create
     /// a `RuleEvent` of type `.praise`. Rate limited to once per 24h.
     private func evaluatePraiseRule(entries: [MoodEntry]) async throws {
@@ -29,15 +39,7 @@ actor RuleEngine {
         let allPositive = lastThree.allSatisfy { positiveMoods.contains($0.mood) }
         guard allPositive else { return }
         let events = try await DatabaseService.shared.fetchRuleEvents()
-        let now = Date()
-        // Rate limit across both praise and advisory events: if any rule
-        // notification occurred in the last 24 hours, skip. This prevents
-        // back-to-back praise and advisory banners when moods change quickly.
-        if let lastEvent = events.last {
-            if now.timeIntervalSince(lastEvent.triggeredAt) < 24 * 60 * 60 {
-                return
-            }
-        }
+        guard canScheduleNotification(now: Date(), events: events) else { return }
         try await DatabaseService.shared.insertRuleEvent(type: .praise)
         scheduleLocalNotification(for: .praise)
     }
@@ -52,13 +54,7 @@ actor RuleEngine {
         let count = entries.filter { $0.timestamp >= windowStart && negativeMoods.contains($0.mood) }.count
         guard count >= 5 else { return }
         let events = try await DatabaseService.shared.fetchRuleEvents()
-        // Rate limit across both rule types. Skip if any event happened less than
-        // 24 hours ago.
-        if let lastEvent = events.last {
-            if now.timeIntervalSince(lastEvent.triggeredAt) < 24 * 60 * 60 {
-                return
-            }
-        }
+        guard canScheduleNotification(now: now, events: events) else { return }
         try await DatabaseService.shared.insertRuleEvent(type: .advisory)
         scheduleLocalNotification(for: .advisory)
     }
