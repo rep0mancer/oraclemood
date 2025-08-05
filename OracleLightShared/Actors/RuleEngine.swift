@@ -20,7 +20,7 @@ actor RuleEngine {
         }
     }
 
-    /// Checks if a notification can be scheduled based on a 24-hour rate limit.
+    /// Checks if a notification can be scheduled based on a 24-hour rate limit across all rule events.
     private func canScheduleNotification(now: Date, events: [RuleEvent]) -> Bool {
         guard let mostRecentEvent = events.max(by: { $0.triggeredAt < $1.triggeredAt }) else {
             // No previous events, so we can schedule.
@@ -38,8 +38,10 @@ actor RuleEngine {
         let positiveMoods: Set<Mood> = [.happy, .ecstatic]
         let allPositive = lastThree.allSatisfy { positiveMoods.contains($0.mood) }
         guard allPositive else { return }
+
         let events = try await DatabaseService.shared.fetchRuleEvents()
         guard canScheduleNotification(now: Date(), events: events) else { return }
+
         try await DatabaseService.shared.insertRuleEvent(type: .praise)
         scheduleLocalNotification(for: .praise)
     }
@@ -53,8 +55,10 @@ actor RuleEngine {
         let negativeMoods: Set<Mood> = [.angry, .sad]
         let count = entries.filter { $0.timestamp >= windowStart && negativeMoods.contains($0.mood) }.count
         guard count >= 5 else { return }
+
         let events = try await DatabaseService.shared.fetchRuleEvents()
         guard canScheduleNotification(now: now, events: events) else { return }
+        
         try await DatabaseService.shared.insertRuleEvent(type: .advisory)
         scheduleLocalNotification(for: .advisory)
     }
@@ -64,11 +68,11 @@ actor RuleEngine {
         let content = UNMutableNotificationContent()
         switch type {
         case .praise:
-            content.title = NSLocalizedString("notification.praise.title", comment: "Praise rule title")
-            content.body = NSLocalizedString("notification.praise.body", comment: "Praise rule body")
+            content.title = L10n.notificationPraiseTitle
+            content.body = L10n.notificationPraiseBody
         case .advisory:
-            content.title = NSLocalizedString("notification.advisory.title", comment: "Advisory rule title")
-            content.body = NSLocalizedString("notification.advisory.body", comment: "Advisory rule body")
+            content.title = L10n.notificationAdvisoryTitle
+            content.body = L10n.notificationAdvisoryBody
         }
         content.sound = .default
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
@@ -79,3 +83,4 @@ actor RuleEngine {
         }
     }
 }
+
