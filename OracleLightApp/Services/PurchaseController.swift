@@ -1,6 +1,7 @@
 import Foundation
 import StoreKit
 import OracleLightShared
+import os.log
 
 /// Handles loading and purchasing the one‑time non‑consumable product used to
 /// unlock premium features. On initialisation it queries the App Store for
@@ -33,7 +34,7 @@ final class PurchaseController: ObservableObject {
                 }
             }
         } catch {
-            // ignore errors; product will remain nil
+            os_log("Failed to load products from App Store: %{public}@", log: .default, type: .error, String(describing: error))
         }
     }
 
@@ -55,3 +56,4 @@ final class PurchaseController: ObservableObject {
         }
     }
 }
+
