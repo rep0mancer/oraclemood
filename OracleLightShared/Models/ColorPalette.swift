@@ -6,8 +6,8 @@ public struct ColorPalette {
     public static func color(for mood: Mood, palette: Palette) -> Color {
         // Constructs asset names like "VividAngry", "PastelHappy", etc.
         // Note: String(describing:) is used for simple enum-to-string conversion.
-        let moodName = String(describing: mood).prefix(1).uppercased() + String(describing: mood).dropFirst()
-        let paletteName = palette.rawValue.prefix(1).uppercased() + palette.rawValue.dropFirst()
+        let moodName = String(describing: mood).capitalized
+        let paletteName = palette.rawValue.capitalized
 
         let colorAssetName = "\(paletteName)\(moodName)"
 
