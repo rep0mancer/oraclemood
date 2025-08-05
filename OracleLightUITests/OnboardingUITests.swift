@@ -1,13 +1,33 @@
 import XCTest
-import XCVM
 
 final class OnboardingUITests: XCTestCase {
-    func testOnboardingFlow() throws {
-        // Use XCVM to snapshot the onboarding screens. This test is illustrative
-        // and would normally launch the application, step through the UI,
-        // and capture snapshots for each size class and appearance.
-        // Since we cannot run UI tests in this environment, we leave this as a
-        // placeholder.
-        XCTAssertTrue(true)
+
+    override func setUpWithError() throws {
+        // In UI tests it is usually best to stop immediately when a failure occurs.
+        continueAfterFailure = false
+    }
+
+    func testOnboardingPrivacyScreen_ContinueButtonExists() throws {
+        // Launch the application.
+        let app = XCUIApplication()
+        
+        // Set a launch argument to ensure the onboarding flow is always shown for this test.
+        app.launchArguments += ["-hasSeenOnboarding", "NO"]
+        app.launch()
+
+        // Verify the "Continue" button on the privacy screen exists.
+        // The accessibilityIdentifier was set in OnboardingFlowView.swift.
+        let privacyContinueButton = app.buttons["PrivacyContinueButton"]
+        
+        // Assert that the button exists and is hittable after a reasonable wait time.
+        XCTAssertTrue(
+            privacyContinueButton.waitForExistence(timeout: 5),
+            "The continue button on the privacy screen should exist."
+        )
+        XCTAssertTrue(
+            privacyContinueButton.isHittable,
+            "The continue button should be hittable."
+        )
     }
 }
+

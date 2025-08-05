@@ -1,6 +1,7 @@
 import SwiftUI
 import StoreKit
 import OracleLightShared
+import UniformTypeIdentifiers
 
 /// Displays user settings including prompt times, minimum interval, colour palette,
 /// and purchase options. Includes an export database button and legal
@@ -116,25 +117,36 @@ struct SettingsView: View {
 
 }
 
-/// Represents a document for exporting the encrypted database. It compresses the
-/// SQLite file using ZIP with a password supplied by the user. The actual
-/// zipping logic is simplified here.
+/// Represents a document for exporting the database file.
 struct DBExportDocument: FileDocument {
-    static var readableContentTypes: [UTType] { [.data] }
-    let data: Data
+    static var readableContentTypes: [UTType] { [.database] }
+    
+    var databaseData: Data
 
     init() {
-        // Read the database file from the shared App Group into memory. In a real
-        // implementation you would compress and password‑protect the file.
+        // Attempt to read the database file from the shared App Group into memory.
         let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConfig.appGroupIdentifier)
-        let dbURL = container?.appendingPathComponent(AppConfig.databaseFilename)
-        self.data = (try? Data(contentsOf: dbURL ?? URL(fileURLWithPath: "/dev/null"))) ?? Data()
+        if let dbURL = container?.appendingPathComponent(AppConfig.databaseFilename),
+           let data = try? Data(contentsOf: dbURL) {
+            self.databaseData = data
+        } else {
+            // Provide empty data as a fallback if the DB can't be read.
+            self.databaseData = Data()
+        }
     }
+
     init(configuration: ReadConfiguration) throws {
-        self.data = configuration.file.regularFileContents ?? Data()
+        guard let data = configuration.file.regularFileContents else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        self.databaseData = data
     }
+
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        return .init(regularFileWithContents: data)
+        // Return the data wrapped in a FileWrapper with the correct filename.
+        let fileWrapper = FileWrapper(regularFileWithContents: databaseData)
+        fileWrapper.preferredFilename = AppConfig.databaseFilename
+        return fileWrapper
     }
 }
 
