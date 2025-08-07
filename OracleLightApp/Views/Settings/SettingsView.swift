@@ -16,7 +16,7 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section(header: Text(L10n.settingsPromptsSection)) {
-                ForEach(settings.promptTimes, id: \ .self) { time in
+                ForEach(settings.promptTimes, id: \.self) { time in
                     Text(time)
                 }
                 .onDelete { offsets in

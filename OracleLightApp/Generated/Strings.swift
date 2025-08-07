@@ -40,6 +40,10 @@ internal enum L10n {
     // General buttons
     internal static let generalContinue = NSLocalizedString("general.continue", comment: "Continue button")
     internal static let generalDone = NSLocalizedString("general.done", comment: "Done button")
+    internal static let generalOk = NSLocalizedString("general.ok", comment: "OK button")
+
+    // Errors
+    internal static let errorTitle = NSLocalizedString("error.title", comment: "Generic error title")
 
     // Home tabs
     internal static let homeTabDaily = NSLocalizedString("home.tab.daily", comment: "Daily")

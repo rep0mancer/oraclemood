@@ -30,9 +30,8 @@ Three actors orchestrate business logic:
 * **RuleEngine** — Evaluates mood sequences to trigger praise or advisory
   notifications. It inserts `RuleEvent` records and schedules local
   notifications.
-* **PromptScheduler** — Computes a day’s worth of notification requests each
-  night at 02:00, respecting the minimum interval between prompts and
-  avoiding conflicts with manual mood entries.
+* **PromptScheduler** — Recomputes and schedules the next week of notification
+requests whenever settings change, onboarding completes, or the app returns to the foreground, respecting the minimum interval between prompts and avoiding conflicts with manual mood entries.
 
 These actors use Swift Concurrency to ensure all database writes occur off
 the main thread and to prevent race conditions.

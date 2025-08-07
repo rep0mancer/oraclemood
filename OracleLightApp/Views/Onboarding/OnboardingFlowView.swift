@@ -92,13 +92,10 @@ struct PromptSchedulerEditView: View {
                 .font(.title2)
                 .padding(.top)
             List {
-                ForEach(settings.promptTimes, id: \ .self) { time in
+                ForEach(settings.promptTimes, id: \.self) { time in
                     HStack {
                         Text(time)
                         Spacer()
-                        // Toggle to enable/disable; default enabled
-                        Toggle("", isOn: .constant(true))
-                            .labelsHidden()
                     }
                 }
                 .onDelete { indices in

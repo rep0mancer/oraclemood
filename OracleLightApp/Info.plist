@@ -30,8 +30,6 @@
         <key>UIApplicationSupportsMultipleScenes</key>
         <false/>
     </dict>
-    <key>NSCalendarsUsageDescription</key>
-    <string>This app schedules notifications for your mood prompts.</string>
     <key>NSPrivacyAccessedAPITypes</key>
     <array/>
 </dict>

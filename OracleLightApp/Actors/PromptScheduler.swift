@@ -43,16 +43,13 @@ actor PromptScheduler {
             var candidateDates: [Date] = []
             let formatter = ISO8601DateFormatter()
             for dayOffset in 0..<7 {
+                guard let baseDay = calendar.date(byAdding: .day, value: dayOffset, to: now) else { continue }
                 for timeString in settings.promptTimes {
                     let comps = timeString.split(separator: ":").map(String.init)
                     guard comps.count == 2,
                           let hour = Int(comps[0]),
                           let minute = Int(comps[1]) else { continue }
-                    var dateComponents = calendar.dateComponents([.year, .month, .day], from: now)
-                    dateComponents.day = (dateComponents.day ?? 1) + dayOffset
-                    dateComponents.hour = hour
-                    dateComponents.minute = minute
-                    if let date = calendar.date(from: dateComponents) {
+                    if let date = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: baseDay) {
                         // Only schedule prompts in the future
                         if date > now {
                             candidateDates.append(date)
