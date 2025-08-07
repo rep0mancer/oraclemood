@@ -61,6 +61,12 @@
 "settings.purchase.price" = "Purchase for %@";
 "settings.purchase.thanks" = "Thank you for purchasing!";
 
+/* Errors */
+"error.title" = "An Error Occurred";
+
+/* General */
+"general.ok" = "OK";
+
 /* Legal & licences */
 "legal.content" = "This is the legal notice. Your privacy is respected.";
 "licenses.content" = "Third‑party licences will appear here.";

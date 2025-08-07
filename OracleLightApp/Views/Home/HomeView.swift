@@ -7,7 +7,6 @@ struct HomeView: View {
     @EnvironmentObject var moodStore: MoodStore
     @EnvironmentObject var errorState: ErrorState
     @State private var selection: Tab = .daily
-    @State private var ruleEvents: [RuleEvent] = []
 
     enum Tab: String, CaseIterable, Identifiable {
         case daily
@@ -29,11 +28,6 @@ struct HomeView: View {
                     .tabItem { Label(L10n.homeTabMonthly, systemImage: "calendar.circle") }
                     .tag(Tab.monthly)
             }
-            .onAppear {
-                Task {
-                    self.ruleEvents = (try? await DatabaseService.shared.fetchRuleEvents()) ?? []
-                }
-            }
             .navigationTitle(L10n.homeTitle)
             .toolbar {
                 NavigationLink(destination: SettingsView()) {
@@ -43,9 +37,9 @@ struct HomeView: View {
         }
         .alert(isPresented: $errorState.isPresentingError) {
             Alert(
-                title: Text("An Error Occurred"),
+                title: Text(L10n.errorTitle),
                 message: Text(errorState.errorMessage),
-                dismissButton: .default(Text("OK"))
+                dismissButton: .default(Text(L10n.generalOk))
             )
         }
     }
@@ -86,12 +80,12 @@ struct WeeklyChartView: View {
             return (weekday, hour, entry.mood.rawValue)
         }
         Chart {
-            ForEach(points, id: \ .0) { point in
+            ForEach(points, id: \.0) { point in
                 RectangleMark(
                     x: .value(L10n.chartXAxisDayOfWeek, point.0),
-                    y: .value(L10n.chartYAxisHour, point.1),
-                    color: .value(L10n.chartYAxisMood, point.2)
+                    y: .value(L10n.chartYAxisHour, point.1)
                 )
+                .foregroundStyle(by: .value(L10n.chartYAxisMood, point.2))
             }
         }
         .chartXAxisLabel(L10n.chartXAxisDayOfWeek)
@@ -113,12 +107,12 @@ struct MonthlyChartView: View {
             return (day, hour, entry.mood.rawValue)
         }
         Chart {
-            ForEach(points, id: \ .0) { point in
+            ForEach(points, id: \.0) { point in
                 RectangleMark(
                     x: .value(L10n.chartXAxisDay, point.0),
-                    y: .value(L10n.chartYAxisHour, point.1),
-                    color: .value(L10n.chartYAxisMood, point.2)
+                    y: .value(L10n.chartYAxisHour, point.1)
                 )
+                .foregroundStyle(by: .value(L10n.chartYAxisMood, point.2))
             }
         }
         .chartXAxisLabel(L10n.chartXAxisDay)

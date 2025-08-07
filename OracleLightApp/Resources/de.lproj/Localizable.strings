@@ -61,6 +61,12 @@
 "settings.purchase.price" = "Kaufen für %@";
 "settings.purchase.thanks" = "Vielen Dank für deinen Kauf!";
 
+/* Fehler */
+"error.title" = "Ein Fehler ist aufgetreten";
+
+/* Allgemein */
+"general.ok" = "OK";
+
 /* Rechtliches & Lizenzen */
 "legal.content" = "Dies ist der Rechtshinweis. Deine Privatsphäre wird respektiert.";
 "licenses.content" = "Die Lizenzen von Drittanbietern erscheinen hier.";

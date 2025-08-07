@@ -18,6 +18,7 @@ final class PurchaseController: ObservableObject {
 
     init() {
         Task { await load() }
+        Task { await observeTransactions() }
     }
 
     /// Loads the product information from the App Store and determines if the
@@ -30,6 +31,7 @@ final class PurchaseController: ObservableObject {
             for await entitlement in Transaction.currentEntitlements {
                 if case .verified(let transaction) = entitlement, transaction.productID == productID {
                     self.isPurchased = true
+                    await transaction.finish()
                     return
                 }
             }
@@ -45,14 +47,24 @@ final class PurchaseController: ObservableObject {
             let result = try await product.purchase()
             switch result {
             case .success(let verification):
-                if case .verified(_) = verification {
+                if case .verified(let transaction) = verification {
                     self.isPurchased = true
+                    await transaction.finish()
                 }
             default:
                 break
             }
         } catch {
             await errorHandler.present(error: error)
+        }
+    }
+
+    private func observeTransactions() async {
+        for await update in Transaction.updates {
+            if case .verified(let transaction) = update, transaction.productID == productID {
+                self.isPurchased = true
+                await transaction.finish()
+            }
         }
     }
 }
